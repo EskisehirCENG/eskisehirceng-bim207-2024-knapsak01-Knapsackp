@@ -35,22 +35,20 @@ public class KP01 {
 
     public static KP01 fromFile(Path path) {
 
-        try (InputStream input = Files.newInputStream(path);
-             Scanner scanner = new Scanner(input)) {
+        try (Scanner scanner = new Scanner(path)) {
 
             int numberOfItems = scanner.nextInt();
-
-            Set<Item> items = new HashSet<>(numberOfItems);
+            HashSet<Item> items = new HashSet<>(numberOfItems);
 
             for (int i = 0; i < numberOfItems; i++) {
-                items.add(new Item(scanner.nextLong(), scanner.nextLong(), scanner.nextLong()));
+                items.add(new Item(scanner.nextInt(), scanner.nextLong(), scanner.nextLong()));
             }
 
             long capacity = scanner.nextLong();
-
-            KP01 result = new KP01(capacity, Set.copyOf(items));
+            KP01 kp01 = new KP01(capacity, items);
+            kp01.tag = path.getParent().getFileName().toString();
             items.clear();
-            return result;
+            return kp01;
 
         } catch (IOException e) {
             throw new RuntimeException(e);

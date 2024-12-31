@@ -1,4 +1,8 @@
 package edu.estu;
 
-public record Item(long id, long profit, long weight) {
+public record Item(int id, long profit, long weight) {
+
+    double unitValue() {
+        return (double) profit / weight;
+    }
 }
